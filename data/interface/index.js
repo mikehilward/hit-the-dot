@@ -109,7 +109,7 @@ var config = {
           input.addEventListener("click", function (e) {
             var action = e.target.getAttribute("action");
             if (action) {
-              config.game.move.dot(parseInt(action));
+              config.game.dot.move(parseInt(action));
             }
           });
           /*  */
@@ -127,7 +127,6 @@ var config = {
     "duration": 30,
     "grid": {"size": null},
     "total": {"hits": null},
-    "dot": {"position": -1},
     "log": function (e) {
       document.cpanel.state.value = e;
     },
@@ -163,44 +162,7 @@ var config = {
       document.cpanel.score.value = config.game.total.hits;
       /*  */
       config.game.timer.start(config.game.duration);
-      config.game.launch();
-    },
-    "launch": function () {
-      if (!config.game.grid.size) return;
-      /*  */
-      for (var i = 0; i < 100; i++) {
-        var id = Math.floor((i + 1) / 1000 + Math.random() * 100 % config.game.grid.size);
-        if (id !== config.game.dot.position) {
-          var target = document.dmz.elements[id];
-          if (target) {
-            target.setAttribute("checked", true);
-            config.game.dot.position = id;
-            break;
-          } else {
-            console.error(id);
-          }
-        }
-      }
-    },
-    "move": {
-      "dot": function (loc) {
-        if (config.game.is.playing === false) {
-          config.game.log("Press start to play");
-          return config.game.reset.grid();
-        }
-        /*  */
-        if (config.game.dot.position !== loc) {
-          config.game.total.hits += -1;
-          document.cpanel.score.value = config.game.total.hits;
-          document.dmz.elements[loc].setAttribute("checked", false);
-        } else {
-          config.game.total.hits += 1;
-          document.cpanel.score.value = config.game.total.hits;
-          document.dmz.elements[loc].setAttribute("checked", false);
-          /*  */
-          config.game.launch();
-        }
-      }
+      config.game.dot.mark();
     },
     "stop": function (flag) {
       var score = document.querySelector("input[name='score']");
@@ -256,6 +218,52 @@ var config = {
               config.game.timer.start(config.game.timer.value);
             }, 1000);
           }
+        }
+      }
+    },
+    "dot": {
+      "position": -1,
+      "error": function (loc) {
+        document.dmz.elements[loc].setAttribute("error", true);
+        window.setTimeout(function () {
+          document.dmz.elements[loc].setAttribute("error", false);
+        }, 100);
+      },
+      "mark": function () {
+        if (!config.game.grid.size) return;
+        /*  */
+        for (var i = 0; i < 100; i++) {
+          var rand = Math.floor((i + 1) / 1000 + Math.random() * 100 % config.game.grid.size);
+          if (rand !== config.game.dot.position) {
+            var target = document.dmz.elements[rand];
+            if (target) {
+              target.setAttribute("checked", true);
+              config.game.dot.position = rand;
+              break;
+            }
+          }
+        }
+      },
+      "move": function (loc) {
+        if (config.game.is.playing === false) {
+          config.game.log("Press start to play");
+          return config.game.reset.grid();
+        }
+        /*  */
+        if (config.game.dot.position !== loc) {
+          config.game.total.hits += -1;
+          document.cpanel.score.value = config.game.total.hits;
+          document.dmz.elements[loc].setAttribute("error", false);
+          document.dmz.elements[loc].setAttribute("checked", false);
+          /*  */
+          config.game.dot.error(loc);
+        } else {
+          config.game.total.hits += 1;
+          document.cpanel.score.value = config.game.total.hits;
+          document.dmz.elements[loc].setAttribute("error", false);
+          document.dmz.elements[loc].setAttribute("checked", false);
+          /*  */
+          config.game.dot.mark();
         }
       }
     }
