@@ -7,8 +7,8 @@ c. Use the (start | stop) button to start or stop the game.
 
 How to play:
 1. Click on the orange circle button as,
-2. they are selected randomly by the addon.
-3. one point per correct hit, minus one point per miss.
+2. Cells are selected randomly by the addon.
+3. One point per correct hit, minus one point per miss.
 4. Hit as many orange dots as you can!
 
 Note: At each game, the total duration is 30 seconds. Within this time-span hit as many dots as you can.
