@@ -79,12 +79,13 @@ var config = {
   "app": {
     "start": function () {
       var count = 0;
-      var n = window === window.top ? 10 : 6;
       var table = document.getElementById("dots");
       var rows = document.querySelector("input[name='rows']");
       var best = document.querySelector("input[name='best']");
       var columns = document.querySelector("input[name='columns']");
+      var context = document.documentElement.getAttribute("context");
       /*  */
+      var n = context === "webapp" ? 6 : 10;
       rows.value = config.storage.read("rows") !== undefined ? config.storage.read("rows") : 6;
       best.value = config.storage.read("best") !== undefined ? config.storage.read("best") : 0;
       columns.value = config.storage.read("columns") !== undefined ? config.storage.read("columns") : n;
