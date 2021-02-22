@@ -234,29 +234,20 @@ input[name="startstop"] {
   padding: 0;
   width: 48px;
   height: 48px;
+  cursor: default;
   border-radius: 50%;
   transition: 100ms ease all;
   background-color: transparent;
-}
-
-#dots input[checked='true'] {
-  cursor: pointer;
-  background-color: #FF9100;
-}
-
-#dots input[checked='false'] {
-  cursor: default;
-  background-color: transparent;
   border: solid 1px rgba(0,0,0,0.1);
 }
 
-#dots input[error='true'] {
+#dots input[error] {
   background-color: rgba(0,0,0,0.3);
 }
 
-#dots input[error='false'] {
-  background-color: transparent;
-  border: solid 1px rgba(0,0,0,0.1);
+#dots input[checked] {
+  cursor: pointer;
+  background-color: #FF9100 !important;
 }
 
 html[context="webapp"] .toolbar {

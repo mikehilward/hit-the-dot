@@ -104,7 +104,6 @@ var config = {
           td.setAttribute("align", "center");
           td.setAttribute("valign", "center");
           input.setAttribute("type", "button");
-          input.setAttribute("checked", false);
           input.setAttribute("action", count + '');
           input.addEventListener("click", function (e) {
             var action = e.target.getAttribute("action");
@@ -137,7 +136,7 @@ var config = {
     "reset": {
       "grid": function () {
         for (var k = 0; k < document.dmz.elements.length; k++) {
-          document.dmz.elements[k].setAttribute("checked", false);
+          document.dmz.elements[k].removeAttribute("checked");
         }
       }
     },
@@ -224,9 +223,9 @@ var config = {
     "dot": {
       "position": -1,
       "error": function (loc) {
-        document.dmz.elements[loc].setAttribute("error", true);
+        document.dmz.elements[loc].setAttribute("error", '');
         window.setTimeout(function () {
-          document.dmz.elements[loc].setAttribute("error", false);
+          document.dmz.elements[loc].removeAttribute("error");
         }, 100);
       },
       "mark": function () {
@@ -237,7 +236,7 @@ var config = {
           if (rand !== config.game.dot.position) {
             var target = document.dmz.elements[rand];
             if (target) {
-              target.setAttribute("checked", true);
+              target.setAttribute("checked", '');
               config.game.dot.position = rand;
               break;
             }
@@ -253,15 +252,15 @@ var config = {
         if (config.game.dot.position !== loc) {
           config.game.total.hits += -1;
           document.cpanel.score.value = config.game.total.hits;
-          document.dmz.elements[loc].setAttribute("error", false);
-          document.dmz.elements[loc].setAttribute("checked", false);
+          document.dmz.elements[loc].removeAttribute("error");
+          document.dmz.elements[loc].removeAttribute("checked");
           /*  */
           config.game.dot.error(loc);
         } else {
           config.game.total.hits += 1;
           document.cpanel.score.value = config.game.total.hits;
-          document.dmz.elements[loc].setAttribute("error", false);
-          document.dmz.elements[loc].setAttribute("checked", false);
+          document.dmz.elements[loc].removeAttribute("error");
+          document.dmz.elements[loc].removeAttribute("checked");
           /*  */
           config.game.dot.mark();
         }
