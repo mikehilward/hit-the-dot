@@ -79,6 +79,7 @@ var config = {
   "app": {
     "start": function () {
       var count = 0;
+      var n = window === window.top ? 10 : 6;
       var table = document.getElementById("dots");
       var rows = document.querySelector("input[name='rows']");
       var best = document.querySelector("input[name='best']");
@@ -86,7 +87,7 @@ var config = {
       /*  */
       rows.value = config.storage.read("rows") !== undefined ? config.storage.read("rows") : 6;
       best.value = config.storage.read("best") !== undefined ? config.storage.read("best") : 0;
-      columns.value = config.storage.read("columns") !== undefined ? config.storage.read("columns") : 10;
+      columns.value = config.storage.read("columns") !== undefined ? config.storage.read("columns") : n;
       /*  */
       config.game.grid.size = rows.value * columns.value;
       config.game.log("App is ready");
