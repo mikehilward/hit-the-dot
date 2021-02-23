@@ -16,7 +16,7 @@ Note: At each game, the total duration is 30 seconds. Within this time-span hit 
 You can install this app as a PWA on your mobile device, moreover, it is available as a browser extension as-well-as a web application:
 
 Chrome: https://chrome.google.com/webstore/detail/hit-the-dot/mnfpajbcekebideplblnlobefchhhiik  
-Edge: 
+Edge: https://microsoftedge.microsoft.com/addons/detail/gedbhgehoocpeafnobooejadofmhgakn  
 Firefox: https://addons.mozilla.org/en-US/firefox/addon/hit-the-dot/  
 Opera: https://addons.opera.com/en/extensions/details/hit-the-dot/  
 Webapp & PWA: https://webbrowsertools.com/hit-the-dot/
