@@ -7,13 +7,45 @@ var config = {
   "resize": {
     "timeout": null,
     "method": function () {
-      if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
-      config.resize.timeout = window.setTimeout(function () {
-        config.storage.write("size", {
-          "width": window.innerWidth || window.outerWidth,
-          "height": window.innerHeight || window.outerHeight
-        });
-      }, 1000);
+      if (config.port.name === "win") {
+        if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
+        config.resize.timeout = window.setTimeout(async function () {
+          var current = await chrome.windows.getCurrent();
+          /*  */
+          config.storage.write("interface.size", {
+            "top": current.top,
+            "left": current.left,
+            "width": current.width,
+            "height": current.height
+          });
+        }, 1000);
+      }
+    }
+  },
+  "port": {
+    "name": '',
+    "connect": function () {
+      config.port.name = "webapp";
+      var context = document.documentElement.getAttribute("context");
+      /*  */
+      if (chrome.runtime) {
+        if (chrome.runtime.connect) {
+          if (context !== config.port.name) {
+            if (document.location.search === "?tab") config.port.name = "tab";
+            if (document.location.search === "?win") config.port.name = "win";
+            if (document.location.search === "?popup") config.port.name = "popup";
+            /*  */
+            if (config.port.name === "popup") {
+              document.documentElement.style.width = "780px";
+              document.documentElement.style.height = "550px";
+            }
+            /*  */
+            chrome.runtime.connect({"name": config.port.name});
+          }
+        }
+      }
+      /*  */
+      document.documentElement.setAttribute("context", config.port.name);
     }
   },
   "storage": {
@@ -268,6 +300,8 @@ var config = {
     }
   }
 };
+
+config.port.connect();
 
 window.addEventListener("load", config.load, false);
 window.addEventListener("resize", config.resize.method, false);
