@@ -10,7 +10,7 @@ var config = {
       if (config.port.name === "win") {
         if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
         config.resize.timeout = window.setTimeout(async function () {
-          var current = await chrome.windows.getCurrent();
+          const current = await chrome.windows.getCurrent();
           /*  */
           config.storage.write("interface.size", {
             "top": current.top,
@@ -26,7 +26,7 @@ var config = {
     "name": '',
     "connect": function () {
       config.port.name = "webapp";
-      var context = document.documentElement.getAttribute("context");
+      const context = document.documentElement.getAttribute("context");
       /*  */
       if (chrome.runtime) {
         if (chrome.runtime.connect) {
@@ -62,7 +62,7 @@ var config = {
     "write": function (id, data) {
       if (id) {
         if (data !== '' && data !== null && data !== undefined) {
-          var tmp = {};
+          let tmp = {};
           tmp[id] = data;
           config.storage.local[id] = data;
           chrome.storage.local.set(tmp, function () {});
@@ -74,20 +74,20 @@ var config = {
     }
   },
   "load": function () {
-    var reload = document.getElementById("reload");
-    var support = document.getElementById("support");
-    var donation = document.getElementById("donation");
-    var rows = document.querySelector("input[name='rows']");
-    var columns = document.querySelector("input[name='columns']");
-    var startstop = document.querySelector("input[name='startstop']");
+    const reload = document.getElementById("reload");
+    const support = document.getElementById("support");
+    const donation = document.getElementById("donation");
+    const rows = document.querySelector("input[name='rows']");
+    const columns = document.querySelector("input[name='columns']");
+    const startstop = document.querySelector("input[name='startstop']");
     /*  */
-    support.addEventListener("click", function (e) {
-      var url = config.addon.homepage();
+    support.addEventListener("click", function () {
+      const url = config.addon.homepage();
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
-    donation.addEventListener("click", function (e) {
-      var url = config.addon.homepage() + "?reason=support";
+    donation.addEventListener("click", function () {
+      const url = config.addon.homepage() + "?reason=support";
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
@@ -110,14 +110,14 @@ var config = {
   },
   "app": {
     "start": function () {
-      var count = 0;
-      var table = document.getElementById("dots");
-      var rows = document.querySelector("input[name='rows']");
-      var best = document.querySelector("input[name='best']");
-      var columns = document.querySelector("input[name='columns']");
-      var context = document.documentElement.getAttribute("context");
+      let count = 0;
+      const table = document.getElementById("dots");
+      const rows = document.querySelector("input[name='rows']");
+      const best = document.querySelector("input[name='best']");
+      const columns = document.querySelector("input[name='columns']");
+      const context = document.documentElement.getAttribute("context");
       /*  */
-      var n = context === "webapp" ? 6 : 10;
+      let n = context === "webapp" ? 6 : 10;
       rows.value = config.storage.read("rows") !== undefined ? config.storage.read("rows") : 6;
       best.value = config.storage.read("best") !== undefined ? config.storage.read("best") : 0;
       columns.value = config.storage.read("columns") !== undefined ? config.storage.read("columns") : n;
@@ -126,19 +126,19 @@ var config = {
       config.game.log("App is ready");
       table.textContent = '';
       /*  */
-      for (var i = 0; i < rows.value; i++) {
-        var tr = document.createElement("tr");
+      for (let i = 0; i < rows.value; i++) {
+        const tr = document.createElement("tr");
          /*  */
-        for (var j = 0; j < columns.value; j++) {
-          var td = document.createElement("td");
-          var input = document.createElement("input");
+        for (let j = 0; j < columns.value; j++) {
+          const td = document.createElement("td");
+          const input = document.createElement("input");
            /*  */
           td.setAttribute("align", "center");
           td.setAttribute("valign", "center");
           input.setAttribute("type", "button");
           input.setAttribute("action", count + '');
           input.addEventListener("click", function (e) {
-            var action = e.target.getAttribute("action");
+            const action = e.target.getAttribute("action");
             if (action) {
               config.game.dot.move(parseInt(action));
             }
@@ -167,7 +167,7 @@ var config = {
     },
     "reset": {
       "grid": function () {
-        for (var k = 0; k < document.dmz.elements.length; k++) {
+        for (let k = 0; k < document.dmz.elements.length; k++) {
           document.dmz.elements[k].removeAttribute("checked");
         }
       }
@@ -196,9 +196,9 @@ var config = {
       config.game.dot.mark();
     },
     "stop": function (flag) {
-      var score = document.querySelector("input[name='score']");
-      var timeleft = document.querySelector("input[name='timeleft']");
-      var startstop = document.querySelector("input[name='startstop']");
+      const score = document.querySelector("input[name='score']");
+      const timeleft = document.querySelector("input[name='timeleft']");
+      const startstop = document.querySelector("input[name='startstop']");
       /*  */
       config.game.reset.grid();
       config.game.timer.stop();
@@ -209,10 +209,10 @@ var config = {
       /*  */
       if (flag) window.alert("Game over!\nYour score is: " + config.game.total.hits);
       if (config.game.total.hits > 0) {
-        var best = config.storage.read("best");
+        const best = config.storage.read("best");
         /*  */
-        var cond_1 = !best;
-        var cond_2 = best && config.game.total.hits > best;
+        const cond_1 = !best;
+        const cond_2 = best && config.game.total.hits > best;
         if (cond_1 || cond_2) {
           config.storage.write("best", config.game.total.hits);
           document.querySelector("input[name='best']").value = config.game.total.hits;
@@ -230,9 +230,9 @@ var config = {
         }
       },      
       "start": function (t) {
-        var score = document.querySelector("input[name='score']");
-        var timeleft = document.querySelector("input[name='timeleft']");
-        var startstop = document.querySelector("input[name='startstop']");
+        const score = document.querySelector("input[name='score']");
+        const timeleft = document.querySelector("input[name='timeleft']");
+        const startstop = document.querySelector("input[name='startstop']");
         /*  */
         timeleft.value = t;
         startstop.value = "Stop";
@@ -263,10 +263,10 @@ var config = {
       "mark": function () {
         if (!config.game.grid.size) return;
         /*  */
-        for (var i = 0; i < 100; i++) {
-          var rand = Math.floor((i + 1) / 1000 + Math.random() * 100 % config.game.grid.size);
+        for (let i = 0; i < 100; i++) {
+          const rand = Math.floor((i + 1) / 1000 + Math.random() * 100 % config.game.grid.size);
           if (rand !== config.game.dot.position) {
-            var target = document.dmz.elements[rand];
+            const target = document.dmz.elements[rand];
             if (target) {
               target.setAttribute("checked", '');
               config.game.dot.position = rand;
