@@ -214,18 +214,28 @@ input[name="startstop"] {
   background-color: #fff;
 }
 
+.sidebar,
 .toolbar {
   top: 0;
-  right: 0;
   z-index: 11;
   position: absolute;
 }
 
+.sidebar {
+  left: 0;
+}
+
+.toolbar {
+  right: 0;
+}
+
+.sidebar table,
 .toolbar table {
   border-spacing: 0;
   table-layout: fixed;
 }
 
+.sidebar table tr td,
 .toolbar table tr td {
   padding: 0;
   width: 48px;
@@ -233,14 +243,17 @@ input[name="startstop"] {
   cursor: pointer;
   user-select: none;
   text-align: center;
+  transition: 300ms ease background-color;
 }
 
+.sidebar table tr td svg,
 .toolbar table tr td svg {
   fill: #555;
   pointer-events: none;
   vertical-align: middle;
 }
 
+.sidebar table tr td:hover,
 .toolbar table tr td:hover {
   background-color: rgba(0,0,0,0.05);
 }
@@ -300,4 +313,54 @@ html[context="popup"] .section:last-child .footer {
 
 html[context="webapp"] .toolbar {
   display: none;
+}
+
+html[theme='dark'], 
+html[theme='dark'] body {
+  color: #ebebeb;
+  color-scheme: dark;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .section,
+html[theme='dark'] .buttons input[type='text'] {
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .sidebar table tr td:hover,
+html[theme='dark'] .toolbar table tr td:hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+html[theme='dark'] #dots input {
+  background-color: rgb(255 255 255 / 2%);
+}
+
+html[theme='dark'] form[name='dmz'] {
+  border-color: rgb(255 255 255 / 10%);
+}
+
+html[theme='dark'] input,
+html[theme='dark'] #dots input {
+  border-color: rgb(255 255 255 / 50%);
+}
+
+html[theme='dark'] .buttons input[name="score"] {
+  color: #5f98ff;
+}
+
+html[theme='dark'] .buttons input[name="timeleft"] {
+  color: #ff52b0;
+}
+
+html[theme='dark'] p,
+html[theme='dark'] li,
+html[theme='dark'] input,
+html[theme='dark'] summary {
+  color: #ebebeb;
+}
+
+html[theme='dark'] .sidebar table tr td svg,
+html[theme='dark'] .toolbar table tr td svg {
+  fill: #ebebeb;
 }

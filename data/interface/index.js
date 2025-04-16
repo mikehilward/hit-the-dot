@@ -74,6 +74,7 @@ var config = {
     }
   },
   "load": function () {
+    const theme = document.getElementById("theme");
     const reload = document.getElementById("reload");
     const support = document.getElementById("support");
     const donation = document.getElementById("donation");
@@ -103,6 +104,14 @@ var config = {
       config.game.reload.timeout = window.setTimeout(config.game.reload.interface, 300);
     });
     /*  */
+    theme.addEventListener("click", function () {
+      let attribute = document.documentElement.getAttribute("theme");
+      attribute = attribute === "dark" ? "light" : "dark";
+      /*  */
+      document.documentElement.setAttribute("theme", attribute);
+      config.storage.write("theme", attribute);
+    }, false);
+    /*  */
     config.storage.load(config.app.start);
     startstop.addEventListener("click", config.game.start);
     window.removeEventListener("load", config.load, false);
@@ -116,8 +125,10 @@ var config = {
       const best = document.querySelector("input[name='best']");
       const columns = document.querySelector("input[name='columns']");
       const context = document.documentElement.getAttribute("context");
+      const theme = config.storage.read("theme") !== undefined ? config.storage.read("theme") : "light";
       /*  */
       let n = context === "webapp" ? 6 : 10;
+      document.documentElement.setAttribute("theme", theme !== undefined ? theme : "light");
       rows.value = config.storage.read("rows") !== undefined ? config.storage.read("rows") : 6;
       best.value = config.storage.read("best") !== undefined ? config.storage.read("best") : 0;
       columns.value = config.storage.read("columns") !== undefined ? config.storage.read("columns") : n;
